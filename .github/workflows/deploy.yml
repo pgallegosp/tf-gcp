@@ -35,22 +35,22 @@ jobs:
       id: apply
       run: terraform apply -var-file="terraform.tfvars" -auto-approve
 
-    - name: 'Save Kubeconfig Cluster 1'
-      run: echo "${{ steps.apply.outputs.kubeconfig_cluster1 }}" > $HOME/.kube/config_cluster1
-      shell: bash
-
-    - name: 'Save Kubeconfig Cluster 2'
-      run: echo "${{ steps.apply.outputs.kubeconfig_cluster2 }}" > $HOME/.kube/config_cluster2
-      shell: bash
-
-    - name: 'Upload Kubeconfig Cluster 1'
-      uses: actions/upload-artifact@v3
-      with:
-        name: kubeconfig_cluster1
-        path: $HOME/.kube/config_cluster1
-
-    - name: 'Upload Kubeconfig Cluster 2'
-      uses: actions/upload-artifact@v3
-      with:
-        name: kubeconfig_cluster2
-        path: $HOME/.kube/config_cluster2
+#    - name: 'Save Kubeconfig Cluster 1'
+#      run: echo "${{ steps.apply.outputs.kubeconfig_cluster1 }}" > $HOME/.kube/config_cluster1
+#      shell: bash
+#
+#    - name: 'Save Kubeconfig Cluster 2'
+#      run: echo "${{ steps.apply.outputs.kubeconfig_cluster2 }}" > $HOME/.kube/config_cluster2
+#      shell: bash
+#
+#    - name: 'Upload Kubeconfig Cluster 1'
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: kubeconfig_cluster1
+#        path: $HOME/.kube/config_cluster1
+#
+#    - name: 'Upload Kubeconfig Cluster 2'
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: kubeconfig_cluster2
+#        path: $HOME/.kube/config_cluster2
