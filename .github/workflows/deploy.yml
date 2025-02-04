@@ -34,6 +34,11 @@ jobs:
         ls -l gcp-key.json
         cat gcp-key.json | jq .
 
+    - name: Configurar Proyecto GCP
+      run: |
+        export PROJECT_ID=$(gcloud config get-value project)
+        echo "GOOGLE_CLOUD_PROJECT=$PROJECT_ID" >> $GITHUB_ENV
+        echo "TF_VAR_project_id=$PROJECT_ID" >> $GITHUB_ENV  # Opcional si Terraform usa una variable
 
     - name: Instalar Terraform
       uses: hashicorp/setup-terraform@v3
