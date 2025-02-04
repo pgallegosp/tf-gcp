@@ -5,11 +5,6 @@ on:
     branches:
       - main
 
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
 jobs:
   terraform:
     name: 'Terraform Apply'
@@ -37,13 +32,25 @@ jobs:
       run: terraform plan -var-file="terraform.tfvars"
 
     - name: 'Terraform Apply'
+      id: apply
       run: terraform apply -var-file="terraform.tfvars" -auto-approve
 
-    - name: 'Save Kubeconfig'
-      run: echo "${{ steps.terraform.outputs.kubeconfig }}" > $HOME/.kube/config
+    - name: 'Save Kubeconfig Cluster 1'
+      run: echo "${{ steps.apply.outputs.kubeconfig_cluster1 }}" > $HOME/.kube/config_cluster1
+      shell: bash
 
-    - name: 'Upload Kubeconfig'
+    - name: 'Save Kubeconfig Cluster 2'
+      run: echo "${{ steps.apply.outputs.kubeconfig_cluster2 }}" > $HOME/.kube/config_cluster2
+      shell: bash
+
+    - name: 'Upload Kubeconfig Cluster 1'
       uses: actions/upload-artifact@v2
       with:
-        name: kubeconfig
-        path: $HOME/.kube/config
+        name: kubeconfig_cluster1
+        path: $HOME/.kube/config_cluster1
+
+    - name: 'Upload Kubeconfig Cluster 2'
+      uses: actions/upload-artifact@v2
+      with:
+        name: kubeconfig_cluster2
+        path: $HOME/.kube/config_cluster2
