@@ -28,11 +28,16 @@ jobs:
         gcloud auth activate-service-account --key-file=gcp-key.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
 
-    - name: 'Export Google Cloud Credentials'
-      run: echo "${{ secrets.GCP_CREDENTIALS }}" > $HOME/gcloud-credentials.json
+    - name: Instalar Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.5.7  # Asegúrate de usar la versión adecuada
 
-    - name: 'Check Google Cloud Credentials File'
-      run: cat $HOME/gcloud-credentials.json
+#    - name: 'Export Google Cloud Credentials'
+#      run: echo "${{ secrets.GCP_CREDENTIALS }}" > $HOME/gcloud-credentials.json
+
+#    - name: 'Check Google Cloud Credentials File'
+#      run: cat $HOME/gcloud-credentials.json
 
     - name: 'Check Files'
       run: pwd; ls -ltrhas
@@ -40,31 +45,24 @@ jobs:
 #    - name: 'Print Environment Variables'
 #      run: env | grep GOOGLE_APPLICATION_CREDENTIALS
 
-    - name: 'Set GOOGLE_APPLICATION_CREDENTIALS Environment Variable'
-      run: echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-credentials.json" >> $GITHUB_ENV
+#    - name: 'Set GOOGLE_APPLICATION_CREDENTIALS Environment Variable'
+#      run: echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-credentials.json" >> $GITHUB_ENV
 
-    - name: 'Verify Environment Variable'
-      run: echo $GOOGLE_APPLICATION_CREDENTIALS
+#    - name: 'Verify Environment Variable'
+#      run: echo $GOOGLE_APPLICATION_CREDENTIALS
 
-    - name: 'Setup Terraform'
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.5.0
+#    - name: 'Setup Terraform'
+#      uses: hashicorp/setup-terraform@v1
+#      with:
+#        terraform_version: 1.5.0
 
     - name: 'Terraform Init'
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-credentials.json
       run: terraform init
 
     - name: 'Terraform Plan'
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-credentials.json
       run: terraform plan -var-file="terraform.tfvars"
 
     - name: 'Terraform Apply'
-      id: apply
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-credentials.json
       run: terraform apply -var-file="terraform.tfvars" -auto-approve
 
 #    - name: 'Save Kubeconfig Cluster 1'
