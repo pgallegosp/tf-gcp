@@ -26,6 +26,9 @@ jobs:
     - name: 'Check Google Cloud Credentials File'
       run: cat $HOME/gcloud-credentials.json
 
+    - name: 'Check Files'
+      run: pwd; ls -ltrhas
+
 #    - name: 'Print Environment Variables'
 #      run: env | grep GOOGLE_APPLICATION_CREDENTIALS
 
