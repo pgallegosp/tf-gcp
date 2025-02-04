@@ -29,6 +29,9 @@ jobs:
 #    - name: 'Print Environment Variables'
 #      run: env | grep GOOGLE_APPLICATION_CREDENTIALS
 
+    - name: 'Set GOOGLE_APPLICATION_CREDENTIALS Environment Variable'
+      run: echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-credentials.json" >> $GITHUB_ENV
+
     - name: 'Verify Environment Variable'
       run: echo $GOOGLE_APPLICATION_CREDENTIALS
 
