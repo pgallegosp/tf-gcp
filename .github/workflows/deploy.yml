@@ -44,13 +44,13 @@ jobs:
       shell: bash
 
     - name: 'Upload Kubeconfig Cluster 1'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: kubeconfig_cluster1
         path: $HOME/.kube/config_cluster1
 
     - name: 'Upload Kubeconfig Cluster 2'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: kubeconfig_cluster2
         path: $HOME/.kube/config_cluster2
