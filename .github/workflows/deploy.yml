@@ -26,8 +26,11 @@ jobs:
     - name: 'Check Google Cloud Credentials File'
       run: cat $HOME/gcloud-credentials.json
 
-    - name: 'Print Environment Variables'
-      run: env | grep GOOGLE_APPLICATION_CREDENTIALS
+#    - name: 'Print Environment Variables'
+#      run: env | grep GOOGLE_APPLICATION_CREDENTIALS
+
+    - name: 'Verify Environment Variable'
+      run: echo $GOOGLE_APPLICATION_CREDENTIALS
 
     - name: 'Setup Terraform'
       uses: hashicorp/setup-terraform@v1
