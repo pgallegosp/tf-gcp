@@ -27,6 +27,15 @@ jobs:
         echo "$GOOGLE_CREDENTIALS" > gcp-key.json
         gcloud auth activate-service-account --key-file=gcp-key.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json
+
+    - name: Verificar credenciales
+      run: |
+        echo "GOOGLE_APPLICATION_CREDENTIALS: $GOOGLE_APPLICATION_CREDENTIALS"
+        ls -l $(pwd)/gcp-key.json
+        cat $(pwd)/gcp-key.json | jq .client_email  # Para ver si el JSON es válido
+        gcloud auth list
+        gcloud config get-value project
 
     - name: Instalar Terraform
       uses: hashicorp/setup-terraform@v3
