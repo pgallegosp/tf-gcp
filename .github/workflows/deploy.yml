@@ -57,7 +57,7 @@ jobs:
     - name: 'Terraform Apply'
       run: terraform apply -var-file="terraform.tfvars" -auto-approve
 
-# TESTING
+# TESTING ACTIONA
 
 #    - name: 'Save Kubeconfig Cluster 1'
 #      run: echo "${{ steps.apply.outputs.kubeconfig_cluster1 }}" > $HOME/.kube/config_cluster1
