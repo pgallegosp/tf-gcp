@@ -29,6 +29,12 @@ jobs:
         gcloud auth list
         gcloud config get-value project
 
+    - name: Verificar clave JSON
+      run: |
+        ls -l gcp-key.json
+        cat gcp-key.json | jq .
+
+
     - name: Instalar Terraform
       uses: hashicorp/setup-terraform@v3
       with:
